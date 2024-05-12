@@ -18,4 +18,12 @@ public class ExceptionAdvice
         InvalidIDExceptionDto exception=new InvalidIDExceptionDto(id.getID(), "INVALID_PRODUCT_ID");
         return new ResponseEntity<InvalidIDExceptionDto>(exception, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleException()
+    {
+        return new ResponseEntity<String>("Id out of range", HttpStatus.FORBIDDEN);
+
+    }
+
 }

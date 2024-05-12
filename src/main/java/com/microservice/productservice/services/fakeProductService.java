@@ -6,14 +6,15 @@ import com.microservice.productservice.entities.Products;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FakeProductService implements ProductService{
+public class fakeProductService implements ProductService{
 
     private RestTemplate restTemplate;
 
-    FakeProductService(RestTemplate restTemplate)
+    fakeProductService(RestTemplate restTemplate)
     {
         this.restTemplate=restTemplate;
     }
@@ -35,7 +36,7 @@ public class FakeProductService implements ProductService{
 
         // Mapping Category string to Category object
         Category category = new Category();
-        category.setId(0);
+        category.setId(0L);
         category.setTitle(productDto.getCategory());
         products.setCategory(category);
 
@@ -45,26 +46,38 @@ public class FakeProductService implements ProductService{
 
     @Override
     public List<Products> getAllProducts() {
+        ProductDto[] fakeStoreProductDtoList =
+                restTemplate.getForObject("https://fakestoreapi.com/products", ProductDto[].class);
+
+        //convert result
+        List<Products> products = new ArrayList<>();
+        for(ProductDto fakeStoreProductDto : fakeStoreProductDtoList) {
+            products.add(convertDtoToProduct(fakeStoreProductDto));
+        }
+        return products;
+    }
+
+    @Override
+    public Products updateProduct(Products product) {
         return null;
     }
 
     @Override
-    public Products updateProduct() {
+    public Products replaceProduct(Products product) {
         return null;
     }
 
     @Override
-    public Products replaceProduct() {
+    public Products createProduct(Products product) {
         return null;
     }
 
-    @Override
-    public Products createProduct() {
-        return null;
-    }
+
 
     @Override
-    public Products deleteProduct() {
-        return null;
+    public void deleteProduct(Products product) {
+
+
+
     }
 }
