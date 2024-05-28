@@ -14,5 +14,7 @@ public class Products extends identifier{
     @ManyToOne
     private Category category;
     private String description;
+    //private int random; removing dummy to capture versioned schema
+
 
 }
