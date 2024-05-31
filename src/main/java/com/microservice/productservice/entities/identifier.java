@@ -22,10 +22,10 @@ public class identifier {
     protected Long id;
 
     @CreatedDate
-    @Temporal(value=TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.TIMESTAMP)
     protected Date createdAt;
 
     @LastModifiedDate
-    @Temporal(value= TemporalType.TIMESTAMP)
+    @Temporal(value = TemporalType.TIMESTAMP)
     protected Date updatedAt;
 }

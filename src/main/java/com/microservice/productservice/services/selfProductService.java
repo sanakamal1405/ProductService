@@ -10,16 +10,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Primary
+//@Primary
 @Service
-public class selfProductService implements ProductService{
+public class selfProductService implements ProductService {
 
     ProductRepo productRepo;
     private CategoryRepo categoryRepo;
 
-    public selfProductService(ProductRepo productRepo, CategoryRepo categoryRepo)
-    {
-        this.productRepo=productRepo;
+    public selfProductService(ProductRepo productRepo, CategoryRepo categoryRepo) {
+        this.productRepo = productRepo;
         this.categoryRepo = categoryRepo;
     }
 
@@ -47,8 +46,8 @@ public class selfProductService implements ProductService{
     @Override
     public Products createProduct(Products product) {
 
-        Category category= product.getCategory();
-        if(category.getId() == null) {
+        Category category = product.getCategory();
+        if (category.getId() == null) {
             Category savedCategory = categoryRepo.save(category);
             product.setCategory(savedCategory);
         }
@@ -57,8 +56,8 @@ public class selfProductService implements ProductService{
         return productRepo.save(product);
     }
 
-   @Transactional
-   @Override
+    @Transactional
+    @Override
     public void deleteProduct(Products product) {
         System.out.println("in service deleting product");
         productRepo.deleteById(product.getId());

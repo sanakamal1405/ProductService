@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Category extends identifier{
+public class Category extends identifier {
 
 
     private String title;

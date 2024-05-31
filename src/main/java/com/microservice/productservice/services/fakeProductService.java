@@ -3,21 +3,22 @@ package com.microservice.productservice.services;
 import com.microservice.productservice.dtos.ProductDto;
 import com.microservice.productservice.entities.Category;
 import com.microservice.productservice.entities.Products;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Primary
 @Service
-public class fakeProductService implements ProductService{
+public class fakeProductService implements ProductService {
 
     private RestTemplate restTemplate;
 
-    fakeProductService(RestTemplate restTemplate)
-    {
-        this.restTemplate=restTemplate;
+    fakeProductService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
+
     @Override
     public Products getProductById(Long id) {
         ProductDto fakeStoreProductDto =
@@ -51,7 +52,7 @@ public class fakeProductService implements ProductService{
 
         //convert result
         List<Products> products = new ArrayList<>();
-        for(ProductDto fakeStoreProductDto : fakeStoreProductDtoList) {
+        for (ProductDto fakeStoreProductDto : fakeStoreProductDtoList) {
             products.add(convertDtoToProduct(fakeStoreProductDto));
         }
         return products;
@@ -73,10 +74,8 @@ public class fakeProductService implements ProductService{
     }
 
 
-
     @Override
     public void deleteProduct(Products product) {
-
 
 
     }

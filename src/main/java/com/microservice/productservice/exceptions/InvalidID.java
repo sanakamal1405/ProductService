@@ -5,13 +5,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InvalidID extends RuntimeException{
+public class InvalidID extends RuntimeException {
 
     Long ID;
-    public InvalidID(String m,Long id)
-    {
+
+    public InvalidID(String m, Long id) {
         super(m);
-        this.ID=id;
+        this.ID = id;
 
     }
 }

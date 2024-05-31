@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Products extends identifier{
+public class Products extends identifier {
     private String title;
     private double price;
     @ManyToOne
