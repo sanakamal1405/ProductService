@@ -1,31 +1,44 @@
 package com.microservice.productservice.services;
 
+import com.microservice.productservice.config.RedisTemplateConfig;
 import com.microservice.productservice.dtos.ProductDto;
 import com.microservice.productservice.entities.Category;
 import com.microservice.productservice.entities.Products;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-//@Primary
+@Primary
 @Service
 public class fakeProductService implements ProductService {
 
-    private RestTemplate restTemplate;
 
-    fakeProductService(RestTemplate restTemplate) {
+    private RestTemplate restTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
+
+    public fakeProductService(RestTemplate restTemplate, RedisTemplate redisTemplate) {
+
         this.restTemplate = restTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     public Products getProductById(Long id) {
+        Products product = (Products) redisTemplate.opsForHash().get("PRODUCTS", "PRODUCTS_"+id);
+        if(product!=null)
+            return product;
         ProductDto fakeStoreProductDto =
                 restTemplate.getForObject("https://fakestoreapi.com/products/" + id,
                         ProductDto.class);
 
-        return convertDtoToProduct(fakeStoreProductDto);
+        Products p= convertDtoToProduct(fakeStoreProductDto);
+
+        redisTemplate.opsForHash().put("PRODUCTS","PRODUCTS_"+p.getId(),p);
+
+        return p;
     }
 
     private Products convertDtoToProduct(ProductDto productDto) {
